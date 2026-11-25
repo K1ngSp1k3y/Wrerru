@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AccountDateSpoofer — Revenge Plugin</title>
+  <style>
+    :root {
+      --bg: #0b0b10;
+      --card: rgba(24, 24, 34, 0.78);
+      --border: rgba(168, 85, 247, 0.28);
+      --accent: #a855f7;
+      --accent-2: #ec4899;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: radial-gradient(circle at top right, #1f1235, var(--bg) 55%);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      width: 100%;
+      max-width: 500px;
+      background: var(--card);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+      font-size: 1.45rem;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+    p.sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
+    label {
+      display: block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .row { display: flex; gap: 8px; margin-bottom: 18px; }
+    input {
+      flex: 1;
+      background: rgba(10, 10, 16, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+    }
+    button {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .commands {
+      background: rgba(10, 10, 16, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+    code {
+      color: #e9d5ff;
+      background: rgba(168, 85, 247, 0.16);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>AccountDateSpoofer</h1>
+    <p class="sub">Revenge plugin to locally spoof your Discord Member Since date.</p>
+    <label>Plugin Install URL</label>
+    <div class="row">
+      <input id="manifestUrl" type="text" readonly />
+      <button id="copyBtn" type="button">Copy</button>
+    </div>
+    <div class="commands">
+      <div><code>/setdate 2016-05-13</code> — Set local creation date (YYYY-MM-DD)</div>
+      <div><code>/setdate off</code> — Reset back to original creation date</div>
+    </div>
+  </div>
+  <script>
+    const manifestInput = document.getElementById("manifestUrl");
+    const copyBtn = document.getElementById("copyBtn");
+    manifestInput.value = new URL("manifest.json", window.location.href).href;
+    copyBtn.addEventListener("click", async () => {
+      await navigator.clipboard.writeText(manifestInput.value);
+      copyBtn.textContent = "Copied!";
+      setTimeout(() => (copyBtn.textContent = "Copy"), 1500);
+    });
+  </script>
+</body>
+</html>
